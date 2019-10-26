@@ -5,7 +5,7 @@ header('Access-Control-Allow-Origin: *');
 <html>
 	<head>
 		<title>Test Login</title>
-		<link rel='icon' href='imgs/favicon.ico' type='image/x-icon'/>
+		<link rel='icon' href='../imgs/favicon.ico' type='image/x-icon'/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<meta name="google-signin-client_id" content="151253503551-6laaogg1jaeiovuf9kvcci8mkh9aji1n.apps.googleusercontent.com">

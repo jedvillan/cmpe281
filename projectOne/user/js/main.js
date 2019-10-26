@@ -24,6 +24,18 @@ function init_form_ui() {
     		+"</div>"
 		+"<div class='form-group input-group'>"
     			+"<div class='input-group-prepend'>"
+		    		+"<span class='input-group-text'> <i class='fa fa-user'></i> </span>"
+		 	+"</div>"
+        		+"<input name='' id='new_fn' class='form-control' placeholder='First Name' type='text'>"
+    		+"</div>"
+		+"<div class='form-group input-group'>"
+    			+"<div class='input-group-prepend'>"
+		    		+"<span class='input-group-text'> <i class='fa fa-user'></i> </span>"
+		 	+"</div>"
+        		+"<input name='' id='new_ln' class='form-control' placeholder='Last Name' type='text'>"
+    		+"</div>"
+		+"<div class='form-group input-group'>"
+    			+"<div class='input-group-prepend'>"
 		    		+"<span class='input-group-text'> <i class='fa fa-lock'></i> </span>"
 		 	+"</div>"
         		+"<input name='' id='new_password'  class='form-control' placeholder='New Password' type='password'>"
@@ -72,6 +84,8 @@ function showSignIn() {
 
 function sendSignUpRequest() {
 	let email = document.getElementById('new_email').value;
+	let fname = document.getElementById('new_fn').value;
+	let lname = document.getElementById('new_ln').value;
 	let pswd  = document.getElementById('new_password').value;
 	let cpswd = document.getElementById('confirm_password').value;
 
@@ -81,9 +95,9 @@ function sendSignUpRequest() {
 			return;
 		} else {
 			$.ajax({
-				url: "http://ec2-3-92-152-16.compute-1.amazonaws.com:5000/users",
+				url: "https://uauth.mymsseprojects.com/users",
 				type: "POST",
-				data: {email:email, password:pswd},
+				data: {email:email, password:pswd, firstname:fname, lastname:lname},
 				dataType: "json"
 			}).done(function(data, stat) {
 				console.log(data);
