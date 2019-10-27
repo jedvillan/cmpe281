@@ -66,7 +66,7 @@ function init_form_ui() {
         		+"<input name='' id='signin_password' class='form-control' placeholder='Password' type='password'>"
     		+"</div>"
 		+"<div class='form-group'>"
-			+"<button type='submit' class='btn btn-primary btn-block'>Login</button>"
+			+"<button type='submit' class='btn btn-primary btn-block' onclick='authenticateUser();'>Login</button>"
     		+"</div>"
 	);
 	$("#signup").hide();
@@ -80,6 +80,26 @@ function showSignUp() {
 function showSignIn() {
 	$("#signup").hide();
 	$("#signin").fadeIn();
+}
+
+function authenticateUser() {
+	let email = document.getElementById('signin_email').value;
+	let pswd  = document.getElementById('signin_password').value;
+	let url = "https://uauth.mymsseprojects.com/users/auth";
+
+	$.ajax({
+		url: url,
+		type: "POST",
+		data: {email:email,password:pswd},
+		dataType: "json"
+	}).done(function(data, stat) {
+		if (data.message !== undefined) {
+			return alert(data.message);
+		} else {
+			localStorage.setItem('tokens', JSON.stringify(data));
+			window.location = "https://www.mymsseprojects.com/file_management_demo";
+		}
+	});
 }
 
 function sendSignUpRequest() {
@@ -101,7 +121,6 @@ function sendSignUpRequest() {
 				dataType: "json"
 			}).done(function(data, stat) {
 				console.log(data);
-				console.log(stat);
 			});
 		}
 	} else {

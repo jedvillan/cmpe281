@@ -3,9 +3,19 @@ var fileapi =  "https://fmd.mymsseprojects.com/fileapi";
 var bucket = "https://cmpe281projectone.s3.amazonaws.com/";
 var files;
 var links = [];
+var tokens;
 
 function initPage() {
+	getTokens();
 	getBucketContents();
+}
+
+function getTokens() {
+	if (localStorage.getItem('tokens') === null) {
+		window.location = "https://www.mymsseprojects.com/user";
+	} else {
+		window.tokens = JSON.parse(localStorage.getItem('tokens'));
+	}
 }
 
 function getBucketContents() {
@@ -83,6 +93,11 @@ function getDownloadLinks() {
 	}
 }
 
+function signOut() {
+	localStorage.removeItem('tokens');
+	window.location = "https://www.mymsseprojects.com/user";
+}
+
 function renderMainContainer() {
 	let files = window.files.Contents;
 	let links = window.links;
@@ -93,7 +108,11 @@ function renderMainContainer() {
 		+"</div>"
 	);
 	$('#main_container').append(
-		"<div class='container' style='margin-bottom: 20px;'>"
+		"<nav class='navbar navbar-light bg-light' style='margin-bottom: 50px;'>"
+			+"<h4>Welcome!</h4>"
+			+"<a href='#' onclick='signOut();'><i class='fas fa-sign-out-alt fa-2x'></i></a>" 
+		+"</nav>"
+		+"<div class='container' style='margin-bottom: 20px;'>"
 			+"<div class='form-row align-items-center'>"
 				+"<div class='col-sm-9'>"
 					+"<input type='file' id='my_file' accept='image/*' style='border: 1px solid #333; border-radius: 6px;'>"
@@ -116,7 +135,7 @@ function renderMainContainer() {
 					+"<a style='float: right;' href='#' onclick='deleteFile(\""+file.Key+"\");'>"
 					+"<i class='fa fa-trash fa-2x' style='color: #999999; margin-left: 5px;'></i>"
 					+"</a>"
-					+"<a style='float: right;' download='"+file.Key+"' href='"+links[f]+"'>"
+					+"<a style='float: right;' download='"+file.Key+".jpg' href='"+links[f]+"'>"
 					+"<i class='fas fa-cloud-download-alt fa-2x'></i>"
 					+"</a>"
 				+"</div>"
