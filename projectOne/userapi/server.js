@@ -32,6 +32,7 @@ global.db = db;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); // parse form data client
 app.use(cors());
+global.navigator = () => null;
 var routes = require('./api/routes/usersRoutes');
 routes(app);
 // routes for the app

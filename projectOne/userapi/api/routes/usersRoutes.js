@@ -7,8 +7,8 @@ module.exports = function(app) {
     .post(users.add_new_user);
 
 
-  app.route('/users/:user_email/:password')
-    .get(users.read_a_user)
+  app.route('/users/auth')
+    .post(users.auth_a_user)
     //.put(users.update_a_user)
     //.delete(users.delete_a_user);
 
