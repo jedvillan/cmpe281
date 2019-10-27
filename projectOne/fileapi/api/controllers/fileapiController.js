@@ -1,13 +1,10 @@
 'use strict';
 
-var multer = require('multer');
-var multerS3 = require('multer-s3');
 var fs = require('fs');
-
 var AWS = require('aws-sdk');
-AWS.config.region = 'us-east-1';
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-east-1:632a29cd-9c7b-4060-84b6-12f3e4139f20',
+	AWS.config.region = 'us-east-1';
+	AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    	IdentityPoolId: 'us-east-1:632a29cd-9c7b-4060-84b6-12f3e4139f20',
 });
 var s3 = new AWS.S3({
 	apiVersion: '2006-03-01',
@@ -31,7 +28,7 @@ exports.upload_an_object = function(req, res) {
 	var upload = new AWS.S3.ManagedUpload({
 		params: {
 			Bucket: "cmpe281projectone",
-			Key: Date.now().toString(),
+			Key: fileName.toLowerCase(),
 			Body: base64file,
 			ACL: "public-read"
 		}
@@ -50,12 +47,8 @@ exports.upload_an_object = function(req, res) {
 };
 
 exports.get_object = function(req, res) {
-	console.log("Getting called");
-	//let params = {Key: req.params.fileKey }
 	let params = { Bucket: 'cmpe281projectone', Key: req.params.fileKey }
-	//res.attachment(req.params.fileKey);
-	//var fileStream = s3.getObject(params).createReadStream();
-	//fileStream.pipe(res);
+
 	s3.getSignedUrl('getObject', params, function(err, url) {
 		if (err) {
 			res.send(err);
@@ -64,14 +57,6 @@ exports.get_object = function(req, res) {
 	});
 };
 
-//exports.update_a_task = function(req, res) {
-//  Task.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-//    if (err)
-//      res.send(err);
-//    res.json(task);
-//  });
-//};
-//
 exports.delete_an_object = function(req, res) {
 	let key = req.params.fileKey
 	s3.deleteObject({ Key: key }, function(err, data) {
